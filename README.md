@@ -28,6 +28,12 @@ cd backend && npm install && npm start
 3. 生成订阅
 4. 复制到 Clash
 
+## 参考项目
+
+- [tindy2013/subconverter](https://github.com/tindy2013/subconverter)
+- [CareyWang/sub-web](https://github.com/CareyWang/sub-web)
+- [siiway/urlclash-converter](https://github.com/siiway/urlclash-converter)
+
 ## 仓库
 
 https://github.com/242282218/clash-sub

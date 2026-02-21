@@ -17,4 +17,7 @@ ENV NODE_ENV=production
 
 EXPOSE 31900
 
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD wget -q --spider http://localhost:31900/health || exit 1
+
 CMD ["node", "src/app.js"]

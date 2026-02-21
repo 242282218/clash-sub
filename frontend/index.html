@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clash 订阅转换</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Clash 订阅转换</h1>
+            <p>完全本地运行，数据不上传外部服务器</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="create">创建订阅</button>
+            <button class="tab-btn" data-tab="manage">管理订阅</button>
+        </nav>
+
+        <main>
+            <div id="createTab" class="tab-content active">
+                <div class="section">
+                    <h2>1. 输入节点链接</h2>
+                    <textarea
+                        id="nodesInput"
+                        placeholder="粘贴节点链接，每行一个&#10;支持 vmess://、vless://、ss://、trojan://、ssr://、hysteria2:// 等协议"
+                        rows="8"
+                    ></textarea>
+                    <div class="hint">支持的协议：VMess、VLESS、Shadowsocks、Trojan、SSR、Hysteria2</div>
+                </div>
+
+                <div class="section">
+                    <h2>2. 配置模板</h2>
+                    <div class="template-options">
+                        <label>
+                            <input type="radio" name="templateType" value="remote" checked>
+                            远程模板
+                        </label>
+                        <label>
+                            <input type="radio" name="templateType" value="local">
+                            本地模板
+                        </label>
+                        <label>
+                            <input type="radio" name="templateType" value="custom">
+                            自定义
+                        </label>
+                    </div>
+                    
+                    <div id="remoteTemplateSection" class="template-section">
+                        <div class="url-box">
+                            <input type="text" id="remoteTemplateUrl" placeholder="输入远程模板 URL...">
+                            <button id="loadRemoteBtn" class="btn-load">加载</button>
+                        </div>
+                        <div class="preset-templates">
+                            <span>预设模板：</span>
+                            <button class="preset-btn" data-url="https://raw.githubusercontent.com/242282218/clash-/add_full/proxy.ini">GitHub 默认</button>
+                            <button class="preset-btn" data-url="/clash.ini">本地 clash.ini</button>
+                        </div>
+                    </div>
+                    
+                    <textarea
+                        id="templateInput"
+                        placeholder="配置模板内容将显示在这里..."
+                        rows="10"
+                    ></textarea>
+                    <div class="hint">远程模板会自动缓存 30 分钟</div>
+                </div>
+
+                <div class="section">
+                    <h2>3. 订阅名称（可选）</h2>
+                    <input type="text" id="subscriptionName" placeholder="为订阅起个名字，方便管理..." class="name-input">
+                </div>
+
+                <div class="section buttons">
+                    <button id="previewBtn" class="btn-secondary">预览配置</button>
+                    <button id="generateBtn" class="btn-primary">生成订阅链接</button>
+                </div>
+
+                <div id="preview" class="section preview-section" style="display: none;">
+                    <h2>配置预览</h2>
+                    <div class="preview-info">
+                        <p>解析节点数：<span id="previewProxyCount">0</span></p>
+                    </div>
+                    <div class="preview-container">
+                        <pre id="previewContent"></pre>
+                    </div>
+                    <button id="closePreviewBtn" class="btn-secondary">关闭预览</button>
+                </div>
+
+                <div id="result" class="section result-section" style="display: none;">
+                    <h2>生成成功</h2>
+                    <div class="result-info">
+                        <p>节点数量：<span id="proxyCount">0</span></p>
+                        <p>订阅链接：</p>
+                        <div class="url-box">
+                            <input type="text" id="subscriptionUrl" readonly>
+                            <button id="copyBtn" class="btn-copy">复制</button>
+                        </div>
+                    </div>
+                    <div class="usage-guide">
+                        <h3>使用方法：</h3>
+                        <ol>
+                            <li>复制上面的订阅链接</li>
+                            <li>打开 Clash 客户端</li>
+                            <li>添加订阅 -> 粘贴链接 -> 更新</li>
+                            <li>选择节点并启用代理</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="error" class="section error-section" style="display: none;">
+                    <h2>生成失败</h2>
+                    <p id="errorMessage"></p>
+                </div>
+            </div>
+
+            <div id="manageTab" class="tab-content">
+                <div class="section">
+                    <h2>已保存的订阅</h2>
+                    <div id="subscriptionList" class="subscription-list">
+                        <p class="empty-hint">暂无保存的订阅</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>本服务完全开源，数据仅在本地处理</p>
+            <p>订阅数据持久化存储在 data 目录</p>
+        </footer>
+    </div>
+
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>确认删除</h3>
+            <p>确定要删除订阅 "<span id="deleteSubName"></span>" 吗？</p>
+            <div class="modal-buttons">
+                <button id="cancelDeleteBtn" class="btn-secondary">取消</button>
+                <button id="confirmDeleteBtn" class="btn-danger">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

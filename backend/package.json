@@ -1,0 +1,21 @@
+{
+  "name": "clash-sub-converter",
+  "version": "1.0.0",
+  "description": "Self-hosted Clash subscription converter",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": ["clash", "subscription", "converter"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "js-yaml": "^4.1.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

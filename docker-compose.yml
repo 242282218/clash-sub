@@ -1,20 +1,24 @@
 version: '3.8'
 
 services:
-  clash-sub-converter:
+  clash-sub:
     build: .
-    container_name: clash-sub-converter
+    image: clash-sub:latest
+    container_name: clash-sub
     ports:
-      - "8080:8080"
+      - "31900:31900"
     environment:
       - NODE_ENV=production
-      - PORT=8080
+      - PORT=31900
     restart: unless-stopped
     volumes:
-      - ./templates:/app/templates
-    networks:
-      - clash-network
+      - clash-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:31900/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
-networks:
-  clash-network:
-    driver: bridge
+volumes:
+  clash-data:

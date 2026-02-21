@@ -4,15 +4,25 @@
 
 ## 快速开始
 
-```bash
-# Docker 部署
-docker-compose up -d
+### Docker 部署（推荐）
 
-# 或直接运行
-cd backend && npm install && npm start
+```bash
+# Linux/Mac
+./deploy.sh           # 默认端口 31900
+./deploy.sh 8080      # 自定义端口
+
+# Windows
+deploy.bat            # 默认端口 31900
+deploy.bat 8080       # 自定义端口
 ```
 
-访问 http://localhost:8080
+访问 http://localhost:31900
+
+### 直接运行
+
+```bash
+cd backend && npm install && npm start
+```
 
 ## 功能
 
